@@ -14,6 +14,8 @@ Primeiramente, como a aplicação disponibiliza todo funcionamento através de u
 
 Outro requisito é possuir tanto o banco MySQL que tem os dados base para a migração quanto o banco ElasticSearch que receberá os dados migrados. Os dois bancos de dados precisam ser acessíveis do ambiente no qual o MySQL Elastic Migrator será executado.
 
+Atenção: Podem ser necessárias configurações para que o container consiga ter acesso aos bancos de dados devido a rede. Nesse caso, pode ser necessário modificar o comando que iniciará o container.
+
 ## Utilizando o MySQL Elastic Migrator
 
 ### Download da aplicação
@@ -26,7 +28,7 @@ git clone https://github.com/wellingtondessuy/mysql-elastic-migrator.git
 
 ### Configurações básicas
 
-Execute os seguintes comandos para criar os arquivos de configuração:
+Dentro da pasta da aplicação, execute os seguintes comandos para criar os arquivos de configuração:
 
 ```
 cp .env.example .env
@@ -81,7 +83,7 @@ docker build -t mysql-elastic-migrator-image .
 Com o seguinte comando, crie e execute o container que já começará a migrar os dados conforme as definições do `queries.json`:
 
 ```
-docker run -d -v /home/wellington/projects/mysql-elastic-migrator/:/usr/src/app --name mysql-elastic-migrator mysql-elastic-migrator-image
+docker run --name mysql-elastic-migrator mysql-elastic-migrator-image
 ```
 
 Para acompanhar o processo de migração através do log, execute o comando:
