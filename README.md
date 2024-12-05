@@ -21,7 +21,7 @@ Outro requisito é possuir tanto o banco MySQL que tem os dados base para a migr
 Faça o download da aplicação através do git:
 
 ```
-git clone PREENCHER
+git clone https://github.com/wellingtondessuy/mysql-elastic-migrator.git
 ```
 
 ### Configurações básicas
