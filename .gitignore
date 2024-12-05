@@ -18,3 +18,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/docker-compose
+elastic_config
+queries.json
+format.json

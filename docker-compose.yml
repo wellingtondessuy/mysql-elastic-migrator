@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+  migrator:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: mysql-elastic-migrator-image
+    depends_on:
+        - mysql
+    container_name: migrator_app
+    working_dir: /usr/src/app
+    links:
+      - mysql
+    volumes:
+      - ./:/usr/src/app
+
+  mysql:
+    image: mysql:8.0
+    container_name: migrator_mysql
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    #   SERVICE_TAGS: dev
+    #   SERVICE_NAME: mysql
+    ports:
+      - 33066:3306
+    volumes:
+      - ./docker-compose/mysql-data:/var/lib/mysql
