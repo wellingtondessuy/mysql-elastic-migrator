@@ -1,4 +1,4 @@
-FROM php:8.3-cli-bullseye
+FROM php:8.3-fpm-bullseye
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -20,11 +20,9 @@ RUN docker-php-ext-install pdo_mysql mbstring bcmath
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-COPY . /usr/src/app
+WORKDIR /var/www
 
-WORKDIR /usr/src/app
+COPY . .
 
 RUN composer install
-
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
 
