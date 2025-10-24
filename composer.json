@@ -7,7 +7,8 @@
     "require": {
         "php": "^8.2",
         "elasticsearch/elasticsearch": "^8.16",
-        "laravel/framework": "^11.9",
+        "filament/filament": "^4.0",
+        "laravel/framework": "^11.28",
         "laravel/tinker": "^2.9"
     },
     "require-dev": {
@@ -33,7 +34,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
