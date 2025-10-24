@@ -1,5 +1,9 @@
 FROM php:8.3-fpm-bullseye
 
+# Set environment variables for the new user and password
+ARG USER_NAME=wellington
+ARG USER_PASS=pass
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     cron \
@@ -31,3 +35,7 @@ COPY . .
 
 RUN composer install
 
+RUN useradd -m $USER_NAME && \
+    echo "$USER_NAME:$USER_PASS" | chpasswd
+
+USER $USER_NAME
