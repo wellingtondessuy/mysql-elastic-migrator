@@ -31,21 +31,21 @@ class DataSaver
         $indexExists = $response->getStatusCode() != 404;
 
         if ($indexExists) {
-            Log::info('ElasticSearch Index Already Exists: ' . $this->indexName);
+            Log::channel('migrator')->info('ElasticSearch Index Already Exists: ' . $this->indexName);
 
             return;
         }
 
         $response = $this->elastic->indices()->create($params);
 
-        Log::info('ElasticSearch Index Created: ' . $this->indexName);
+        Log::channel('migrator')->info('ElasticSearch Index Created: ' . $this->indexName);
     }
 
     public function save(array $data)
     {
         $params = ['body' => []];
 
-        Log::info('Documents to save: ' . sizeof($data));
+        Log::channel('migrator')->info('Documents to save: ' . sizeof($data));
 
         foreach ($data as $row) {
             $documentData = [
@@ -63,7 +63,7 @@ class DataSaver
             $params['body'][] = $row;
         }
 
-        Log::info('ElasticSearch Saving Documents... ');
+        Log::channel('migrator')->info('ElasticSearch Saving Documents... ');
         $this->elastic->bulk($params);
     }
 }

@@ -1,6 +1,6 @@
 FROM php:8.3-fpm-bullseye
 
-# Set environment variables for the new user and password
+# TODO-wellington: alterar para www-data
 ARG USER_NAME=wellington
 ARG USER_PASS=pass
 
@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     cron \
     nano \
     git \
+    procps \
     curl \
     zip \
     unzip \
@@ -31,11 +32,15 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 WORKDIR /var/www
 
-COPY . .
-
-RUN composer install
-
 RUN useradd -m $USER_NAME && \
     echo "$USER_NAME:$USER_PASS" | chpasswd
 
 USER $USER_NAME
+
+COPY . .
+
+COPY .env.example .env
+
+# RUN composer install
+
+ENTRYPOINT ["./entrypoint.sh"]

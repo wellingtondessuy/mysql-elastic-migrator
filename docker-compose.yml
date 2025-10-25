@@ -3,6 +3,12 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
     image: mysql-elastic-migrator-image
     container_name: migrator_app
     depends_on:
@@ -37,12 +43,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
-    #   SERVICE_TAGS: dev
-    #   SERVICE_NAME: mysql
     ports:
       - 33066:3306
-    volumes:
-      - ./docker-compose/mysql-data:/var/lib/mysql
 
   # elasticsearch:
   #   image: elasticsearch:9.1.4

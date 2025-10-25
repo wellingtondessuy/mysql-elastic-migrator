@@ -18,11 +18,11 @@ class MySqlSettings extends Component implements HasSchemas
     
     public function mount(): void
     {
-        $this->host          = Setting::where('key', 'mysql_host')->first()?->value;
-        $this->port          = Setting::where('key', 'mysql_port')->first()?->value;
-        $this->databaseName  = Setting::where('key', 'mysql_database')->first()?->value;
-        $this->username      = Setting::where('key', 'mysql_username')->first()?->value;
-        $this->password      = Setting::where('key', 'mysql_password')->first()?->value;
+        $this->host          = Setting::where('key', Setting::MYSQL_HOST)->first()?->value;
+        $this->port          = Setting::where('key', Setting::MYSQL_PORT)->first()?->value;
+        $this->databaseName  = Setting::where('key', Setting::MYSQL_DATABASE)->first()?->value;
+        $this->username      = Setting::where('key', Setting::MYSQL_USERNAME)->first()?->value;
+        $this->password      = Setting::where('key', Setting::MYSQL_PASSWORD)->first()?->value;
         
         $this->form->fill([
             'host'          => $this->host,
@@ -58,11 +58,11 @@ class MySqlSettings extends Component implements HasSchemas
     {
         $data = $this->form->getState();
 
-        Setting::updateOrCreate(['key' => 'mysql_host'], ['value' => $data['host']]);
-        Setting::updateOrCreate(['key' => 'mysql_port'], ['value' => $data['port']]);
-        Setting::updateOrCreate(['key' => 'mysql_database'], ['value' => $data['database_name']]);
-        Setting::updateOrCreate(['key' => 'mysql_username'], ['value' => $data['username']]);
-        Setting::updateOrCreate(['key' => 'mysql_password'], ['value' => $data['password']]);
+        Setting::updateOrCreate(['key' => Setting::MYSQL_HOST], ['value' => $data['host']]);
+        Setting::updateOrCreate(['key' => Setting::MYSQL_PORT], ['value' => $data['port']]);
+        Setting::updateOrCreate(['key' => Setting::MYSQL_DATABASE], ['value' => $data['database_name']]);
+        Setting::updateOrCreate(['key' => Setting::MYSQL_USERNAME], ['value' => $data['username']]);
+        Setting::updateOrCreate(['key' => Setting::MYSQL_PASSWORD], ['value' => $data['password']]);
 
         Notification::make()
             ->title('Configuration saved!')

@@ -18,8 +18,8 @@ class ElasticSearchSettings extends Component implements HasSchemas
     
     public function mount(): void
     {
-        $this->host          = Setting::where('key', 'elasticsearch_host')->first()?->value;
-        $this->api_key       = Setting::where('key', 'elasticsearch_api_key')->first()?->value;
+        $this->host          = Setting::where('key', Setting::ELASTICSEARCH_HOST)->first()?->value;
+        $this->api_key       = Setting::where('key', Setting::ELASTICSEARCH_API_KEY)->first()?->value;
         
         $this->form->fill([
             'host'          => $this->host,
@@ -43,8 +43,8 @@ class ElasticSearchSettings extends Component implements HasSchemas
     {
         $data = $this->form->getState();
 
-        Setting::updateOrCreate(['key' => 'elasticsearch_host'], ['value' => $data['host']]);
-        Setting::updateOrCreate(['key' => 'elasticsearch_api_key'], ['value' => $data['api_key']]);
+        Setting::updateOrCreate(['key' => Setting::ELASTICSEARCH_HOST], ['value' => $data['host']]);
+        Setting::updateOrCreate(['key' => Setting::ELASTICSEARCH_API_KEY], ['value' => $data['api_key']]);
 
         Notification::make()
             ->title('Configuration saved!')

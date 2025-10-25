@@ -18,7 +18,7 @@ class GeneralSettings extends Component implements HasSchemas
     
     public function mount(): void
     {
-        $this->rows_per_iteration = Setting::where('key', 'rows_per_iteration')->first()?->value;
+        $this->rows_per_iteration = Setting::where('key', Setting::GENERAL_ROWS_PER_ITERATION)->first()?->value;
         
         $this->form->fill([
             'rows_per_iteration' => $this->rows_per_iteration,
@@ -41,7 +41,7 @@ class GeneralSettings extends Component implements HasSchemas
     {
         $data = $this->form->getState();
 
-        Setting::updateOrCreate(['key' => 'rows_per_iteration'], ['value' => $data['rows_per_iteration']]);
+        Setting::updateOrCreate(['key' => Setting::GENERAL_ROWS_PER_ITERATION], ['value' => $data['rows_per_iteration']]);
 
         Notification::make()
             ->title('Configuration saved!')

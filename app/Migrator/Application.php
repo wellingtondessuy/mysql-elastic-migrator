@@ -3,6 +3,7 @@
 namespace App\Migrator;
 
 use App\DatabaseInsertions\LoadDatabase;
+use App\Models\Setting;
 use Elastic\Elasticsearch\ClientBuilder;
 use Log;
 
@@ -11,18 +12,38 @@ class Application
     private $elasticSearchClient;
     private $queryManager;
 
-    public function __construct() {
-        Log::info('Starting MysqlElasticMigrator');
+    private function processQueries(array $queries)
+    {
+        foreach ($queries as $index => $query) {
+            $currentIndexQuery = ($index + 1);
+            Log::channel('migrator')->info('Processing query ' . $currentIndexQuery);
+
+            $dataSaver       = new DataSaver($this->elasticSearchClient, $query['index'], $query['document_identifier']);
+
+            Log::channel('migrator')->info(json_encode($query, JSON_PRETTY_PRINT));
+            $queryExecutor = new QueryExecutor(
+                $dataSaver,
+                $query['query']
+            );
+
+            $queryExecutor->execute();
+            Log::channel('migrator')->info('Query ' . $currentIndexQuery . ' has all data migrated to index ' . $query['index'] . ' at ElasticSearch!');
+        }
+    }
+
+    public function __invoke()
+    {
+        Log::channel('migrator')->info('Starting MysqlElasticMigrator');
 
         $this->queryManager  = new QueryManager();
 
-        $elasticSearchHost   = env('ELASTICSEARCH_HOST');
-        $elasticSearchApiKey = env('ELASTICSEARCH_API_KEY');
+        $elasticSearchHost   = Setting::where('key', Setting::ELASTICSEARCH_HOST)->first()?->value;
+        $elasticSearchApiKey = Setting::where('key', Setting::ELASTICSEARCH_API_KEY)->first()?->value;
 
         if (empty($elasticSearchHost) || empty($elasticSearchApiKey)) {
-            Log::error('Configuration Error: you must set ElasticSearch config data in .env file!');
+            Log::channel('migrator')->error('Configuration Error: you must set ElasticSearch config!');
 
-            throw new \Exception('Configuration Error: you must set ElasticSearch config data in .env file!');
+            throw new \Exception('Configuration Error: you must set ElasticSearch config!');
         }
 
         $this->elasticSearchClient = ClientBuilder::create()
@@ -30,36 +51,14 @@ class Application
                                         ->setApiKey($elasticSearchApiKey)
                                         ->build();
 
-        Log::info('ElasticSearch Connection Done!');
-    }
+        Log::channel('migrator')->info('ElasticSearch Connection Done!');
 
-    private function processQueries(array $queries)
-    {
-        foreach ($queries as $index => $query) {
-            $currentIndexQuery = ($index + 1);
-            Log::info('Processing query ' . $currentIndexQuery);
+        Log::channel('migrator')->info('Running!');
 
-            $dataSaver       = new DataSaver($this->elasticSearchClient, $query['index'], $query['document_identifier']);
-
-            Log::info(json_encode($query, JSON_PRETTY_PRINT));
-            $queryExecutor = new QueryExecutor(
-                $dataSaver,
-                $query['query']
-            );
-
-            $queryExecutor->execute();
-            Log::info('Query ' . $currentIndexQuery . ' has all data migrated to index ' . $query['index'] . ' at ElasticSearch!');
-        }
-    }
-
-    public function __invoke()
-    {
-        Log::info('Running!');
-
-        Log::info('Loading queries.json');
+        Log::channel('migrator')->info('Loading queries.json');
         $queries = $this->queryManager->getQueries();
 
-        Log::info('Starting processing data');
+        Log::channel('migrator')->info('Starting processing data');
         $this->processQueries($queries);
     }
 }
