@@ -31,8 +31,7 @@ class GeneralSettings extends Component implements HasSchemas
             ->components([
                 TextInput::make('rows_per_iteration')
                     ->default(10000)
-                    ->helperText('Number of records to process per fetch (can be adjusted for better performance). Caution: a very high value may lead to memory limit issues.')
-                    ->required(),
+                    ->helperText('Number of records to process per fetch (can be adjusted for better performance). Caution: a very high value may lead to memory limit issues. Default: 10000.'),
             ])
             ->statePath('data');
     }

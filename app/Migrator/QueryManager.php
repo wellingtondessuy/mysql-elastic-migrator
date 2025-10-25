@@ -2,12 +2,10 @@
 
 namespace App\Migrator;
 
-use Illuminate\Support\Facades\File;
+use App\Models\Query;
 
 class QueryManager
 {
-    const QUERIES_FILE = 'queries.json';
-
     /**
      * @var array $queries
      */
@@ -15,29 +13,11 @@ class QueryManager
 
     public function __construct()
     {
-        $queriesFilesPath = base_path(self::QUERIES_FILE);
-
-        if (!File::exists($queriesFilesPath)) {
-            throw new \Exception('Arquivo de configuração queries.json não encontrado!');
-        }
-
-        $contents = File::get($queriesFilesPath);
-
-        try {
-            $data = json_decode($contents, true);
-
-            if (is_null($data)) {
-                throw new \Exception('O arquivo de configuração queries.json não está formatado corretamente!');
-            }
-
-            $this->queries = $data;
-        } catch (\Exception $exception) {
-            throw $exception;
-        }
+        $this->queries = Query::all()->toArray();
     }
 
     public function getQueries(): array
     {
-        return $this->queries['queries'];
+        return $this->queries;
     }
 }

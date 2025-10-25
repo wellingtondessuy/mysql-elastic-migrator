@@ -1,9 +1,0 @@
-{
-    "queries": [
-        {
-            "index": "sales",
-            "document_identifier": "id",
-            "query": "SELECT * FROM sales"
-        }
-    ]
-}

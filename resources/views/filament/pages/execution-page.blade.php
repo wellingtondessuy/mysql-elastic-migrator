@@ -26,10 +26,10 @@
 
                 <x-filament::loading-indicator class="h-5 w-5" />
 
-                <pre class="w-full p-4 bg-gray-900 text-white rounded-lg overflow-auto" 
-                    style="min-height: 300px; max-height: 600px; font-family: monospace;">
-                    <code>{{ $logOutput }}</code>
-                </pre>
+                <div class="w-full p-4 bg-gray-900 text-white rounded-lg overflow-auto" 
+                    style="min-height: 300px; max-height: 600px; font-family: monospace; white-space: pre-wrap;">
+                    {{ $logOutput }}
+                </div>
                 
             </x-filament::section>
 

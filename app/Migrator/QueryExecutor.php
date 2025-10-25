@@ -3,6 +3,7 @@
 namespace App\Migrator;
 
 use App\Models\Setting;
+use Artisan;
 use Config;
 use Illuminate\Support\Facades\DB;
 use Log;
@@ -10,7 +11,7 @@ use PDO;
 
 class QueryExecutor
 {
-    const CONFIG_FROM_MYSQL_DATABASE = 'database.connections.from_mysql_database';
+    const CONNECTION_FROM_MYSQL_DATABASE = 'from_mysql_database';
 
     private $dataSaver;
     private $query;
@@ -47,12 +48,14 @@ class QueryExecutor
             'engine'    => null,
         ];
 
-        Config::set(self::CONFIG_FROM_MYSQL_DATABASE, $fromMysqlDatabaseConfig);
+        Config::set('database.connections.' . self::CONNECTION_FROM_MYSQL_DATABASE, $fromMysqlDatabaseConfig);
+
+        DB::purge(self::CONNECTION_FROM_MYSQL_DATABASE);
     }
 
     public function execute()
     {
-        $pdo = DB::connection(self::CONFIG_FROM_MYSQL_DATABASE)->getPdo();
+        $pdo = DB::connection(self::CONNECTION_FROM_MYSQL_DATABASE)->getPdo();
 
         $iteration = 0;
 

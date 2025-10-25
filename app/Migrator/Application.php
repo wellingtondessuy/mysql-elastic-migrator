@@ -18,16 +18,16 @@ class Application
             $currentIndexQuery = ($index + 1);
             Log::channel('migrator')->info('Processing query ' . $currentIndexQuery);
 
-            $dataSaver       = new DataSaver($this->elasticSearchClient, $query['index'], $query['document_identifier']);
+            $dataSaver       = new DataSaver($this->elasticSearchClient, $query['index_name'], $query['document_identifier']);
 
             Log::channel('migrator')->info(json_encode($query, JSON_PRETTY_PRINT));
             $queryExecutor = new QueryExecutor(
                 $dataSaver,
-                $query['query']
+                $query['content']
             );
 
             $queryExecutor->execute();
-            Log::channel('migrator')->info('Query ' . $currentIndexQuery . ' has all data migrated to index ' . $query['index'] . ' at ElasticSearch!');
+            Log::channel('migrator')->info('Query ' . $currentIndexQuery . ' has all data migrated to index ' . $query['index_name'] . ' at ElasticSearch!');
         }
     }
 
@@ -55,10 +55,15 @@ class Application
 
         Log::channel('migrator')->info('Running!');
 
-        Log::channel('migrator')->info('Loading queries.json');
+        Log::channel('migrator')->info('Fetching queries...');
         $queries = $this->queryManager->getQueries();
 
-        Log::channel('migrator')->info('Starting processing data');
-        $this->processQueries($queries);
+        if (empty($queries)) {
+            Log::channel('migrator')->info('No queries found. Go to Queries menu e create some queries. Then after that, start migration process.');   
+        } else {
+            Log::channel('migrator')->info('Starting processing data');
+            $this->processQueries($queries);
+        }
+
     }
 }
