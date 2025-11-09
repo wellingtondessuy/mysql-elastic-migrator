@@ -60,6 +60,14 @@ class DataSaver
 
             $params['body'][] = $documentData;
 
+            foreach (array_keys($row) as $key) {
+                if (filter_var($row[$key], FILTER_VALIDATE_INT) !== false) {
+                    $row[$key] = (int) $row[$key];
+                } else if (filter_var($row[$key], FILTER_VALIDATE_FLOAT) !== false) {
+                    $row[$key] = (float) $row[$key];
+                }
+            }
+
             $params['body'][] = $row;
         }
 

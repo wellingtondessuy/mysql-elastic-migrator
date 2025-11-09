@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use BackedEnum;
+use Config;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -49,9 +50,6 @@ class ExecutionPage extends Page implements HasActions
             ->icon('heroicon-o-play')
             ->outlined()
             ->action(function () {
-                // TODO-wellington: adicionar verificação das informações configuradas
-                // TODO-wellington: adicionar verificação das conexões
-
                 if ($this->isRunning) {
                     Notification::make()->title('Migration process already running!')->warning()->send();
                     return;

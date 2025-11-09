@@ -2,7 +2,6 @@
 
 namespace App\Migrator;
 
-use App\DatabaseInsertions\LoadDatabase;
 use App\Models\Setting;
 use Elastic\Elasticsearch\ClientBuilder;
 use Log;
