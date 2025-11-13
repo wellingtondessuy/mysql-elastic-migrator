@@ -11,4 +11,6 @@ done
 
 composer install
 
+# TODO-wellington: verificar necessidade de ajuste de permissões na pasta storage
+
 exec php-fpm

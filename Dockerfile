@@ -41,6 +41,4 @@ COPY . .
 
 COPY .env.example .env
 
-# RUN composer install
-
 ENTRYPOINT ["./entrypoint.sh"]

@@ -47,22 +47,15 @@ services:
       - 33066:3306
 
   # only for tests
-  mysql-test:
-    image: mysql:8.0
-    container_name: migrator_mysql_test
-    environment:
-      MYSQL_DATABASE: mysql-elastic-migrator-test
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: elastic_migrator_user_test
-    volumes:
-      - ./docker-compose/mysql-data:/var/lib/mysql
-    ports:
-      - 33067:3306
-
-  # elasticsearch:
-  #   image: elasticsearch:9.1.4
-  #   container_name: migrator_elasticsearch
+  # mysql-test:
+  #   image: mysql:8.0
+  #   container_name: migrator_mysql_test
+  #   environment:
+  #     MYSQL_DATABASE: mysql-elastic-migrator-test
+  #     MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+  #     MYSQL_PASSWORD: ${DB_PASSWORD}
+  #     MYSQL_USER: elastic_migrator_user_test
+  #   volumes:
+  #     - ./docker-compose/mysql-data:/var/lib/mysql
   #   ports:
-  #     - 9200:9200
-  #   mem_limit: 1GB
+  #     - 33067:3306
