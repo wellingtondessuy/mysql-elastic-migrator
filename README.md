@@ -150,6 +150,10 @@ Após isso, todos os dados foram migrados para o ElasticSearch e já estão disp
 
 O processo de migração pode ser executado mais de uma vez, no entanto, a aplicação de migração não realiza a limpeza dos dados no ElasticSearch. Nas consultas em que houver um **Documents Unique Identifier** cadastrado, os registros serão atualizados. Porém, se não houver serão criados novos registros juntamente com os que já estão no mesmo índice no ElasticSearch.
 
+### ElasticCloud
+
+Recomendo a criação do banco ElasticSearch através do [ElasticCloud](https://www.elastic.co/). É possível a utilização do serviço por 14 dias de teste, facilitando assim o uso sem a necessidade da criação de qualquer infraestrutura. Além disso, a ferramenta também disponibiliza recursos para visualização das informações do banco, realização de consulta e outras diversas funcionalidades que podem facilitar todo processo de verificação dos dados e da utilidade dessa tecnologia nos diversos contextos da sua própria aplicação.
+
 ### Geração de dados para validação da aplicação
 
 **Atenção: Não execute esse processo de geração de dados se você estiver com o banco real da sua aplicação configurado.**
