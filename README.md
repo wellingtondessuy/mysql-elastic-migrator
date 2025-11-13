@@ -46,7 +46,7 @@ Verifique se os três containeres referentes a aplicação iniciaram corretament
 
 A seguinte tela deve estar disponível:
 
-![Tela Inicial da Aplicação](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/tela_inicial.png?raw=true)
+![Tela Inicial da Aplicação](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_inicial.png?raw=true)
 
 ### Configurações para funcionamento da aplicação
 
@@ -54,19 +54,19 @@ Primeiro necessidade é a configuração dos bancos que serão utilizados no pro
 
 [Configuração do Mysql](http://localhost:8000/mysql-page)
 
-![Tela de Configuração do MySQL](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/tela_config_mysql.png?raw=true)
+![Tela de Configuração do MySQL](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_config_mysql.png?raw=true)
 
 Após isso, realize a configuração do ElasticSearch, para o qual os dados serão migrados. Para isso, acesse o menu **Settings > ElasticSearch** e preencha todas configurações:
 
 [Configuração do ElasticSearch](http://localhost:8000/elastic-search-page)
 
-![Tela de Configuração do ElasticSearch](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/tela_config_elasticsearch.png?raw=true)
+![Tela de Configuração do ElasticSearch](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_config_elasticsearch.png?raw=true)
 
 Há também um tela para configurações gerais da aplicação. Atualmente, existe somente uma configuração que é relativa a quantidade de registros a serem migrados a cada iteração do processamento. Caso queira alterar essa configuração, acesse o menu **Settings > General** e preencha todas configurações:
 
 [Configurações Gerais](http://localhost:8000/general-page)
 
-![Tela de Configurações Gerais](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/tela_config_general.png?raw=true)
+![Tela de Configurações Gerais](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_config_general.png?raw=true)
 
 Essa quantidade possui valor padrão de 10000 e pode ser alterado para incrementar a performance da migração. No entanto, deve-se cuidar pois valores elevados podem causar problemas relacionados ao uso excessivo de memória ram.
 
@@ -76,7 +76,7 @@ Por fim, é necessária a configuração específicas dos dados que devem ser mi
 
 Através do botão **New Query** você pode cadastrar uma nova consulta de dados e configurá-la para a migração.
 
-![Tela de Cadastro de Consulta](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/tela_nova_consulta.png?raw=true)
+![Tela de Cadastro de Consulta](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_nova_consulta.png?raw=true)
 
 Informações descritivas a respeito dos campos desse cadastro:
 
@@ -122,11 +122,11 @@ Após todas as configurações acima serem realizadas, basta iniciar o processo 
 
 [Tela de Execução](http://localhost:8000/execution-page)
 
-![Tela de Execução](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/tela_execucao.png?raw=true)
+![Tela de Execução](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_execucao.png?raw=true)
 
 Clique no botão **Start Migration**. Após isso, um log aparecerá e irá sendo atualizado conforme o processo de migração for sendo executado:
 
-![Tela de Execução com Log](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/tela_execucao_log.png?raw=true)
+![Tela de Execução com Log](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_execucao_log.png?raw=true)
 
 Para cada consulta cadastrada, ao encerrar a migração de todos os registros é exibido no log a seguinte mensagem:
 
@@ -142,7 +142,7 @@ Acompanhe o log até que apareça essa mensagem para a última consulta que foi 
 [2025-11-13 00:36:24] local.INFO: Query 10 has all data migrated to index sales at ElasticSearch! 
 ```
 
-![Tela de Execução com Log Final](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/tela_execucao_log_2.png?raw=true)
+![Tela de Execução com Log Final](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_execucao_log_2.png?raw=true)
 
 Após isso, todos os dados foram migrados para o ElasticSearch e já estão disponíveis para consulta.
 
@@ -156,7 +156,7 @@ O processo de migração pode ser executado mais de uma vez, no entanto, a aplic
 
 Como mencionado no tópico [Inicialização da Aplicação](#InicializaçãoDaAplicação), há um serviço comentado no `docker-compose.yml` chamado `mysql-test` que pode ser utilizado para validação. Dentro da aplicação há um menu que pode ser habilitado através da configuração `GENERATE_DATA_PAGE_ENABLED` presente no arquivo `.env`. Colocando o valor `true` nessa configuração um menu **Migrator - Generate Data** será habilitado.
 
-![Tela de Geração de Dados](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/tela_generate_data.png?raw=true)
+![Tela de Geração de Dados](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_generate_data.png?raw=true)
 
 Essa geração criará dados no mesmo banco que está configurado na tela de configurações do MySQL. É necessário criar as tabelas no banco de teste através dos comandos existentes no arquivo `testing_database/schema.sql`. Toda vez que a geração de dados é executada, as tabelas que são manipuladas serão totalmente limpas e novos dados serão inseridos. Seguem as tabelas que são utilizadas: *customers*, *product_categories*, *products*, *sales* e *sale_products*.
 
