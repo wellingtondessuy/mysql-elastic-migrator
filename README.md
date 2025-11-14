@@ -32,9 +32,15 @@ git clone https://github.com/wellingtondessuy/mysql-elastic-migrator.git
 
 ### Inicialização da aplicação
 
+Primeiramente, crie um arquivo `.env`:
+
+```
+cp .env.example .env
+```
+
 #### Observação: há um serviço dentro do `docker-compose.yml` chamado `mysql-test`. Caso desejar um banco de dados MySQL para testar a ferramenta, você pode descomentar esse serviço para subir juntamente com a aplicação esse banco de dados.
 
-Primeiro passo para inicialização é a execução dos containers. Faça isso executando o seguinte comando:
+Para a inicialização da aplicação é preciso criar e executar os containers. Faça isso executando o seguinte comando:
 
 ```
 docker compose up -d
@@ -158,7 +164,17 @@ Recomendo a criação do banco ElasticSearch através do [ElasticCloud](https://
 
 **Atenção: Não execute esse processo de geração de dados se você estiver com o banco real da sua aplicação configurado.**
 
-Como mencionado no tópico [Inicialização da Aplicação](#InicializaçãoDaAplicação), há um serviço comentado no `docker-compose.yml` chamado `mysql-test` que pode ser utilizado para validação. Dentro da aplicação há um menu que pode ser habilitado através da configuração `GENERATE_DATA_PAGE_ENABLED` presente no arquivo `.env`. Colocando o valor `true` nessa configuração um menu **Migrator - Generate Data** será habilitado.
+Como mencionado no tópico [Inicialização da Aplicação](#InicializaçãoDaAplicação), há um serviço comentado no `docker-compose.yml` chamado `mysql-test` que pode ser utilizado para validação. 
+
+Caso utilize esse serviço, você deve configurar o banco MySQL da seguinte forma nas configurações da aplicação:
+
+**Host**: `mysql-test`<br>
+**Port**: `3306`<br>
+**Database**: `mysql-elastic-migrator-test`<br>
+**Username**: `elastic_migrator_user_test`<br>
+**Password**: `migrator_pass`<br>
+
+Dentro da aplicação há um menu que pode ser habilitado através da configuração `GENERATE_DATA_PAGE_ENABLED` presente no arquivo `.env`. Colocando o valor `true` nessa configuração um menu **Migrator - Generate Data** será habilitado. 
 
 ![Tela de Geração de Dados](https://github.com/wellingtondessuy/mysql-elastic-migrator/blob/master/docs/tela_generate_data.png?raw=true)
 
